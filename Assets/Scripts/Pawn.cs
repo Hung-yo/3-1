@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pawn : MonoBehaviour
@@ -7,6 +8,7 @@ public class Pawn : MonoBehaviour
     public float moveSpeed;
     public float rotationSpeed;
     public float worldSpaceSpeed;
+    public Rigidbody rigidBody;
 
     [Header("Health")]
     public Health health;
@@ -16,6 +18,7 @@ public class Pawn : MonoBehaviour
     {
         health = GetComponent<Health>();
         death = GetComponent<Death>();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -33,12 +36,27 @@ public class Pawn : MonoBehaviour
 
     public void MoveForward(float moveSpeed)
     {
-        transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
+        rigidBody.AddForce(transform.forward * moveSpeed, ForceMode.Impulse);
     }
 
     public void Rotate(float rotationSpeed)
     {
         transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+    }
+
+    public void Yaw(float rotationSpeed)
+    {
+        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.Self);
+    }
+
+    public void Pitch(float rotationSpeed)
+    {
+        transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime, Space.Self);
+    }
+
+    public void Roll(float rotationSpeed)
+    {
+        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime, Space.Self);
     }
 
     public void TranslateHorizontally(float worldSpaceSpeed)

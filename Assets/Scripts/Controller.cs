@@ -6,7 +6,9 @@ public class Controller : MonoBehaviour
     public GameManager gameManager;
     public KeyCode shootKey = KeyCode.Space;
     public float shootKeyTime;
+    public CameraFocusPoint focusPoint;
     private Shooter shooter;
+    public float offsetAmount;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,67 +26,56 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            if (Input.GetKey(KeyCode.W)) // Move forwards
+            // Move forward/backward
+            if (Input.GetKey(KeyCode.W))
             {
                 pawn.MoveForward(pawn.moveSpeed);
             }
-
-            if (Input.GetKey(KeyCode.A)) // Rotate counterclockwise
+            if (Input.GetKey(KeyCode.S))
             {
-                pawn.Rotate(pawn.rotationSpeed);
+                pawn.MoveForward(-pawn.moveSpeed);
             }
 
-            if (Input.GetKey(KeyCode.S)) // Move backwards
+            // Yaw (rotate around Y axis)
+            if (Input.GetKey(KeyCode.A))
             {
-                pawn.MoveForward(-1 * pawn.moveSpeed);
+                pawn.Yaw(-pawn.rotationSpeed);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                pawn.Yaw(pawn.rotationSpeed);
             }
 
-            if (Input.GetKey(KeyCode.D)) // Rotate clockwise
+            // Roll (rotate around Z axis)
+            if (Input.GetKey(KeyCode.Q))
             {
-                pawn.Rotate(-1 * pawn.rotationSpeed);
+                pawn.Roll(pawn.rotationSpeed);
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                pawn.Roll(-pawn.rotationSpeed);
             }
 
-            if (Input.GetKeyDown(KeyCode.UpArrow)) // Translate north
+            // Pitch (rotate around X axis)
+            if (Input.GetKey(KeyCode.Z))
             {
-                pawn.TranslateVertically(pawn.worldSpaceSpeed);
+                pawn.Pitch(pawn.rotationSpeed);
+            }
+            if (Input.GetKey(KeyCode.X))
+            {
+                pawn.Pitch(-pawn.rotationSpeed);
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) // Translate west
+            if (Input.GetKey(KeyCode.O))
             {
-                pawn.TranslateHorizontally(-1 * pawn.worldSpaceSpeed);
+                focusPoint.ChangeOffset(-offsetAmount);
+            }
+            if (Input.GetKey(KeyCode.L))
+            {
+                focusPoint.ChangeOffset(offsetAmount);
             }
 
-            if (Input.GetKeyDown(KeyCode.DownArrow)) // Translate south
-            {
-                pawn.TranslateVertically(-1 * pawn.worldSpaceSpeed);
-            }
-
-            if (Input.GetKeyDown(KeyCode.RightArrow)) // Translate east
-            {
-                pawn.TranslateHorizontally(pawn.worldSpaceSpeed);
-            }
-
-            // Check if pawn is within bounds x -10 to 10, y -5 to 5, teleport them back if necessary
-            if (pawn.transform.position.x < -10)
-            {
-                pawn.TranslateHorizontally(.1f);
-            }
-
-            if (pawn.transform.position.x > 10)
-            {
-                pawn.TranslateHorizontally(-.1f);
-            }
-
-            if (pawn.transform.position.y < -5)
-            {
-                pawn.TranslateVertically(.1f);
-            }
-
-            if (pawn.transform.position.y > 5)
-            {
-                pawn.TranslateVertically(-.1f);
-            }
-
+            
             if (Input.GetKeyDown(shootKey))
             {
                 shootKeyTime = 0f; // Start keeping track of hold time

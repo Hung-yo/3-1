@@ -26,7 +26,7 @@ public class DamageOnCollision : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter(Collider other)
     {
         Debug.Log("Hit " + other.gameObject.name);
         Health otherHealth = other.gameObject.GetComponent<Health>();

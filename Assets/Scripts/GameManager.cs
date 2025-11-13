@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gameManager;
     public List<DamageOnCollision> obstacleList;
     public Pawn pawn;
+    public CameraFocusPoint focusPoint;
     public static bool gameOver = false;
     public static bool isPaused = false;
     public static bool isGameStarted = false;
