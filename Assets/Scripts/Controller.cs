@@ -65,7 +65,7 @@ public class Controller : MonoBehaviour
             {
                 pawn.Pitch(-pawn.rotationSpeed);
             }
-
+            // Change camera focus point offset
             if (Input.GetKey(KeyCode.O))
             {
                 focusPoint.ChangeOffset(-offsetAmount);
@@ -73,6 +73,37 @@ public class Controller : MonoBehaviour
             if (Input.GetKey(KeyCode.L))
             {
                 focusPoint.ChangeOffset(offsetAmount);
+            }
+
+            // Check if pawn is within bounds, teleport them back if necessary
+            if (pawn.transform.position.x < -500)
+            {
+                pawn.TranslateX(1f);
+            }
+
+            if (pawn.transform.position.x > 500)
+            {
+                pawn.TranslateX(-1f);
+            }
+
+            if (pawn.transform.position.y < -500)
+            {
+                pawn.TranslateY(1f);
+            }
+
+            if (pawn.transform.position.y > 500)
+            {
+                pawn.TranslateY(-1f);
+            }
+
+            if (pawn.transform.position.z < -500)
+            {
+                pawn.TranslateZ(1f);
+            }
+
+            if (pawn.transform.position.z > 500)
+            {
+                pawn.TranslateZ(-1f);
             }
 
             

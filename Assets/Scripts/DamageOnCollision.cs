@@ -46,8 +46,15 @@ public class DamageOnCollision : MonoBehaviour
         if (isObstacle)
         {
             GameManager.IncreaseScore(scoreAmount);
-            GameManager.gameManager.obstacleList.Remove(this);
+            if (GameManager.gameManager != null)
+            {
+                GameManager.gameManager.obstacleList.Remove(this);
+            }
         }
-        Destroy(gameObject);
+        Death death = GetComponent<Death>();
+        if (death != null)
+        {
+            death.Die();
+        }
     }
 }

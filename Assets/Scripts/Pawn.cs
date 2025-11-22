@@ -59,12 +59,17 @@ public class Pawn : MonoBehaviour
         transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime, Space.Self);
     }
 
-    public void TranslateHorizontally(float worldSpaceSpeed)
+    public void TranslateX(float worldSpaceSpeed)
     {
         transform.Translate(Vector3.right * worldSpaceSpeed, Space.World);
     }
-    public void TranslateVertically(float worldSpaceSpeed)
+    public void TranslateY(float worldSpaceSpeed)
     {
         transform.Translate(Vector3.up * worldSpaceSpeed, Space.World);
+    }
+
+    public void TranslateZ(float worldSpaceSpeed)
+    {
+        transform.Translate(Vector3.forward * worldSpaceSpeed, Space.World);
     }
 }

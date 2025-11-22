@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         gameOverUI.SetActive(false);
         score = 0;
         lives = 1;
-        timeRemaining = 60;
+        timeRemaining = 999;
     }
 
     // Update is called once per frame
@@ -81,7 +81,10 @@ public class GameManager : MonoBehaviour
     public static void IncreaseScore(int amount)
     {
         score += amount;
-        gameManager.scoreManager.GetComponent<ScoreManager>().UpdateScore();
+        if (gameManager != null && gameManager.scoreManager != null && gameManager.scoreManager.GetComponent<ScoreManager>() != null)
+        {
+            gameManager.scoreManager.GetComponent<ScoreManager>().UpdateScore();
+        }
     }
 
     public void StartGame()

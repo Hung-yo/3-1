@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using time = UnityEngine.Time;
 
@@ -5,15 +9,22 @@ public class SpawnTargets : MonoBehaviour
 {
     public GameObject meteorPrefab;
     public GameObject ufoPrefab;
-    public float screenDimensionX;
-    public float screenDimensionY;
+    public List<Vector3> coordinateList;
+    public int spawnpointAmount;
+    public int obstacleSpawnDelay;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        screenDimensionX = Camera.main.orthographicSize * Camera.main.aspect;
-        screenDimensionY = Camera.main.orthographicSize;
-        StartCoroutine(SpawnTarget());
+        coordinateList = new List<Vector3>();
 
+        // Add all objects called SpawnPoint to list spawnPoints
+        foreach (GameObject point in GameObject.FindGameObjectsWithTag("ObstacleSpawnPoint"))
+        {
+            coordinateList.Add(point.transform.position);
+            spawnpointAmount++;
+        }
+        StartCoroutine(SpawnTarget());
     }
 
     // Update is called once per frame
@@ -28,48 +39,23 @@ public class SpawnTargets : MonoBehaviour
         {
             if (GameManager.isPaused == false && GameManager.gameOver == false && GameManager.isGameStarted == true)
             {
-                float spawnPosX;
-                float spawnPosY;
 
-                float spawnArea = Random.Range(1, 4);
-                if (spawnArea == 1)
-                {
-                    // Spawn in the top area
-                    spawnPosX = Random.Range(-screenDimensionX, screenDimensionX);
-                    spawnPosY = screenDimensionY + 1f;
-                }
-                else if (spawnArea == 2)
-                {
-                    // Spawn in the bottom area
-                    spawnPosX = Random.Range(-screenDimensionX, screenDimensionX);
-                    spawnPosY = -screenDimensionY - 1f;
-                }
-                else if (spawnArea == 3)
-                {
-                    // Spawn in the left area
-                    spawnPosX = -screenDimensionX - 1f;
-                    spawnPosY = Random.Range(-screenDimensionY, screenDimensionY);
-                }
-                else
-                {
-                    // Spawn in the right area
-                    spawnPosX = screenDimensionX + 1f;
-                    spawnPosY = Random.Range(-screenDimensionY, screenDimensionY);
-                }
-
-                Vector3 spawnPosition = new Vector3(spawnPosX, spawnPosY, 0f);
+                int spawnIndex = Random.Range(0, spawnpointAmount);
+                Vector3 spawnPosition = coordinateList[spawnIndex];
 
                 float target = Random.Range(0f, 1f);
                 if (target < .5f)
                 {
-                    Instantiate(meteorPrefab, spawnPosition, Quaternion.identity);
+                    // Meteor prefab not ready yet.
+                    // Instantiate(meteorPrefab, spawnPosition, Quaternion.identity);
+                    Instantiate(ufoPrefab, spawnPosition, Quaternion.identity);
                 }
                 else
                 {
                     Instantiate(ufoPrefab, spawnPosition, Quaternion.identity);
                 }
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(obstacleSpawnDelay);
         }
     }
 }
