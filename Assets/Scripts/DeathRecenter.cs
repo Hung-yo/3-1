@@ -38,6 +38,13 @@ public class DeathRecenter : Death
             pawn.transform.rotation = Quaternion.identity;
             transform.position = spawnPoint;
             health.currentHealth = health.maxHealth;
+
+            // Find all UFOs and move them away from the player (so they aren't spawnkilled)
+            UFO[] ufos = FindObjectsByType<UFO>(FindObjectsSortMode.None);
+            foreach (UFO ufo in ufos)
+            {
+                ufo.MoveAway(spawnPoint);
+            }
         }
     }
 }

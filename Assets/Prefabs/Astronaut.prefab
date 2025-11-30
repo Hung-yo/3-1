@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageOnCollision
   damageAmount: 0
   isObstacle: 0
+  isPickup: 1
   hasCollided: 0
   destroyOnCollision: 1
   scoreAmount: 2

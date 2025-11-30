@@ -3,6 +3,7 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI scoreText;
+    public TMPro.TextMeshProUGUI finalScoreText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,5 +19,6 @@ public class ScoreManager : MonoBehaviour
     public void UpdateScore()
     {
         scoreText.text = "Score: " + GameManager.score.ToString();
+        finalScoreText.text = "Final Score: " + GameManager.score.ToString();
     }
 }

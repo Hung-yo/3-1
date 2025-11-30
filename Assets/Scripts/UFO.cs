@@ -5,6 +5,7 @@ public class UFO : MonoBehaviour
     public Pawn pawn;
     public float moveSpeed;
     public bool hasCollided = false;
+    public float blastBackDistance = 500;
     // public float rotationSpeed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,6 +33,18 @@ public class UFO : MonoBehaviour
         moveVector *= moveSpeed * Time.deltaTime;
         // Move that vector from current position
         transform.position = transform.position + moveVector;
+    }
+
+    public void MoveAway(Vector3 pointToMoveFrom)
+    {
+        Vector3 moveVector = pointToMoveFrom - transform.position;
+        // Do not change the Y value, then normalize.
+        moveVector = new Vector3(moveVector.x, 0f, moveVector.z);
+        moveVector.Normalize();
+        // Multiply by speed
+        moveVector *= blastBackDistance;
+        // Move that vector from current position
+        transform.position = transform.position - moveVector;
     }
 
     public void MoveTowards(GameObject objectToMoveTowards)

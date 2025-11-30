@@ -5,6 +5,7 @@ public class DamageOnCollision : MonoBehaviour
 {
     public int damageAmount = 1;
     public bool isObstacle = false;
+    public bool isPickup = false;
     public bool hasCollided = false;
     public bool destroyOnCollision = true;
     public int scoreAmount = 1;
@@ -50,6 +51,10 @@ public class DamageOnCollision : MonoBehaviour
             {
                 GameManager.gameManager.obstacleList.Remove(this);
             }
+        }
+        if (isPickup)
+        {
+            GameManager.IncreaseScore(scoreAmount);
         }
         Death death = GetComponent<Death>();
         if (death != null)

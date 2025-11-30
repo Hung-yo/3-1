@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageOnCollision
   damageAmount: 10
   isObstacle: 1
+  isPickup: 0
   hasCollided: 0
   destroyOnCollision: 1
   scoreAmount: 1
@@ -195,8 +196,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UFO
   pawn: {fileID: 0}
-  moveSpeed: 0
+  moveSpeed: 30
   hasCollided: 0
+  blastBackDistance: 300
 --- !u!65 &2194473917114187878
 BoxCollider:
   m_ObjectHideFlags: 0

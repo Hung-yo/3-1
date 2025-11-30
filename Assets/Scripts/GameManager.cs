@@ -16,11 +16,14 @@ public class GameManager : MonoBehaviour
     public GameObject scoreManager;
     public GameObject gameplayUI;
     public GameObject creditsUI;
+    public GameObject leaderboardUI;
+    public LeaderboardManager leaderboardManager;
     public GameObject victoryUI;
     public GameObject gameOverUI;
     public static AudioSource backgroundMusic;
     public AudioListener gameOverAudioListener;
-    public static float score;
+    public Camera gameOverCamera;
+    public static int score;
     public static int lives;
     public static int timeRemaining;
     void Awake()
@@ -42,15 +45,17 @@ public class GameManager : MonoBehaviour
     {
         backgroundMusic = GetComponent<AudioSource>();
         gameOverAudioListener.enabled = false;
+        gameOverCamera.enabled = false;
         pauseMenuUI.SetActive(false);
         titleScreenUI.SetActive(true);
         gameplayUI.SetActive(false);
         creditsUI.SetActive(false);
+        leaderboardUI.SetActive(false);
         victoryUI.SetActive(false);
         gameOverUI.SetActive(false);
         score = 0;
         lives = 1;
-        timeRemaining = 999;
+        timeRemaining = 60;
     }
 
     // Update is called once per frame
@@ -60,6 +65,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Failure");
             gameOverAudioListener.enabled = true;
+            gameOverCamera.enabled = true;
             gameOverUI.SetActive(true);
             gameOver = true;
         }
@@ -83,6 +89,7 @@ public class GameManager : MonoBehaviour
         score += amount;
         if (gameManager != null && gameManager.scoreManager != null && gameManager.scoreManager.GetComponent<ScoreManager>() != null)
         {
+            Debug.Log("Passed the score increase checks");
             gameManager.scoreManager.GetComponent<ScoreManager>().UpdateScore();
         }
     }
@@ -115,6 +122,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("Victory!");
         victoryUI.SetActive(true);
         gameOver = true;
+        PlayerPrefs.SetInt("CurrentScore", score);
+        PlayerPrefs.Save();
+        if (leaderboardManager != null)
+        {
+            leaderboardManager.UpdateScore();
+        }
     }
 
     public void UnpauseGame()
@@ -136,6 +149,16 @@ public class GameManager : MonoBehaviour
     public void HideCredits()
     {
         creditsUI.SetActive(false);
+    }
+
+    public void DisplayLeaderboard()
+    {
+        leaderboardUI.SetActive(true);
+    }
+
+    public void HideLeaderboard()
+    {
+        leaderboardUI.SetActive(false);
     }
 
     public void QuitGame()

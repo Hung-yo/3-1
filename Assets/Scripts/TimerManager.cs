@@ -12,6 +12,6 @@ public class TimerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timerText.text = "Time Remaining: " + GameManager.timeRemaining.ToString();
+        timerText.text = "Time: " + GameManager.timeRemaining.ToString();
     }
 }
