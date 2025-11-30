@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.Build.Player;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class LeaderboardManager : MonoBehaviour
 {
